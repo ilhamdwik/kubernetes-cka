@@ -75,25 +75,15 @@ kubectl apply -f /path/to/config-files
 
 ```
 apiVersion: v1
-
 kind: Pod
-
 metadata:
-
   name: myapp-pod
-  
   labels:
-  
-    app: myapp
-    
-    type: front-end
-    
+    app: myapp  
+    type: front-end 
 spec:
-
-  containers:
-  
+  containers:  
     - name: nginx-containers
-    
       image: nginx
 ``` 
 
@@ -111,4 +101,5 @@ membuat pod redis dengan cara imperative
 kubectl run redis --image=redis123 --dry-run=client -o yaml > redis.yaml
 
 kubectl create -f redis.yaml
+
 ----------------------------------------------------------------------
