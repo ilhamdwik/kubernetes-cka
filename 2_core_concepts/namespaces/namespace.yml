@@ -1,0 +1,14 @@
+
+# Mengubah Default Namespace
+kubectl config set-context $(kubectl config current-context) -n (nama namespace)
+
+# Melihat semua pod, service, deployment, dll di semua namespace yang ada
+kubectl get all --all-namespaces
+
+
+# DNS Services
+(nama-service).(nama-namespace).svc.cluster.local
+
+
+# Membatasi sumber daya di namespaces
+Menggunakan Resource Quota
