@@ -74,8 +74,6 @@ kubectl apply -f /path/to/config-files
 #membuat pod redis dengan cara declarative
 
 ```
-POD
-
 apiVersion: v1
 
 kind: Pod
