@@ -1,0 +1,20 @@
+# Label Nodes
+kubectl label nodes (nama-node) (label-key)=(label-value)
+
+kubectl label nodes node01 size=Large
+
+
+### pod-definition.yaml
+
+```
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: nginx
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+  nodeSelector:
+    size: Large
+```

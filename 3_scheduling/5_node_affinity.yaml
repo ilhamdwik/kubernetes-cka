@@ -1,0 +1,40 @@
+# Node Affinity 
+
+### Node Affinity Types
+
+#### Available:
+requiredDuringSchedulingIgnoreDuringExecution
+preferredDuringSchedulingIgnoreDuringExecution
+
+#### Planned
+reuiredDuringSchedulingRequiredDuringExecution
+
+
+# Add Label to Nodes
+kubectl get nodes --show-labels
+
+kubectl label nodes (your-node-name) disktype=ssd
+
+kubectl get pods --output=wide
+
+
+### pod-definition.yaml
+```
+apiVersion:
+kind:
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: size
+                operator: In
+                values:
+                  - large
+```

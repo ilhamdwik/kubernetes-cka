@@ -1,0 +1,35 @@
+# Taints -Node
+kubectl taint nodes node-name key=value:taint-effect
+
+kubectl taint nodes node1 app=blue:NoSchedule
+
+# Remove Taint - Node
+kubectl taint nodes node1 app=blue:NoSchedule-
+
+
+# Tolerations - Pods
+
+### Example
+kubectl taint nodes node1 app=blue:NoSchedule
+
+#### Masukkan nilai2 dari taint ke dalam tolerations di dalam pod
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+    - images: nginx
+      name: nginx
+  tolerations:
+    - key: "app"
+      operator: "Equal"
+      value: "blue"
+      effect: "NoSchedule"
+```
+
+### Melihat taint di node
+kubectl describe node (nama-nodes) | grep Taint
+
+kubectl describe nodes (nama-node)

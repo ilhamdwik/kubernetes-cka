@@ -1,0 +1,9 @@
+# Melihat selector di pods via imperative command 
+kubectl get pods --selector (isi-labels)
+
+kubectl get pods --selector app=prometheus --no-headers -n prometheus | wc -l
+
+# With lebih dari 1 labels
+kubectl get pods --selector app=prometheus,tier=front-end --no-headers -n prometheus | wc -l
+
+kubectl get all --selector app=prometheus -n prometheus
