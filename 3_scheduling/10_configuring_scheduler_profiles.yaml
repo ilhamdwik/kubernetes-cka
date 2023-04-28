@@ -1,0 +1,27 @@
+pod-definition.yaml
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  priorityClassName: high-priority
+  containers:
+    - image: nginx
+      name: nginx
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: 10
+```
+
+
+```
+apiVersion: v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 100000
+globalDefault: false
+descriptions: "This priority class should be used for XYZ service pods only"
+```
