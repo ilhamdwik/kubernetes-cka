@@ -40,6 +40,17 @@ spec:
 
 
 
+# Cara Edit Pods, Deployments, dll.
+
+kubectl edit pods (nama-pod)
+
+#### catatan: yang bisa di edit hanya beberapa tertentu seperti nama, image, dll. yang lainnya tidak bisa diedit.
+#### keluar dari vim dengan ":q!" akan diperlihatkan lokasi file yang baru saja kita edit. copy paste lokasi beserta nama filenya
+
+#### lalu jalankan perintah berikut:
+kubectl replace --force -f (lokasi-file/nama-file)
+
+
 
 ## Note on default resource requirements and limits
 In the previous lecture, I said - "When a pod is created the containers are assigned a default CPU request of .5 and memory of 256Mi". For the POD to pick up those defaults you must have first set those as default values for request and limit by creating a LimitRange in that namespace.

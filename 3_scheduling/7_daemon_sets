@@ -1,0 +1,44 @@
+# Example daemon sets
+
+#### daemon-set-definition.yaml
+```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: monitoring-daemon
+spec:
+  selector:
+    matchLabels:
+      app: monitoring-agent
+  template:
+    metadata:
+      labels:
+        app: monitoring-agent
+    spec:
+      containers:
+        - name: monitoring-agent
+          image: monitoring-agent
+```
+
+```
+kubectl create -f daemon-set-definition.yaml
+```
+
+```
+kubectl get daemonsets
+```
+
+```
+kubectl describe daemonsets (nama-daemonsets)
+```
+
+# Create Daemon Sets
+```
+kubectl create deployment elasticsearch --image=k8s.gcr.io/fluentd-elasticsearch:1.20 --dry-run=client -o yaml > elasticsearch.yaml
+```
+
+lalu ubah kind menjadi DaemonSet, lalu hapus replicas, strategy, and status.
+
+```
+kubectl create -f elasticsearch.yaml
+```

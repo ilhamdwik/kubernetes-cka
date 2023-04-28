@@ -1,0 +1,31 @@
+# Static Pods
+
+### Create Static Pods
+
+```
+kubectl run static-busybox --image=busybox --dry-run=client -o yaml --command -- sleep 1000 > static-busybox.yaml
+
+cp static-busybox.yaml /etc/kubernetes/manifest
+```
+
+### catatan: jika file yaml berada di dalam folder /etc/kubernetes/manifest maka pods akan secara otomatis terbuat.
+
+-------------------------------------------------------------------------------------------------------------------
+
+### see configuration static-pods 
+
+```
+cat /var/lib/kubelet/config.yaml
+```
+
+search staticPodPatch -> lokasi file static-pods
+
+-------------------------------------------------------------------------------------------------------------------
+
+### Delete Static Pods
+
+```
+rm /etc/kubernetes/manifest/static-busybox.yaml
+```
+
+maka static-pods akan secara otomatis terhapus sendiri, namun perlu waktu agak sedikit lama.
