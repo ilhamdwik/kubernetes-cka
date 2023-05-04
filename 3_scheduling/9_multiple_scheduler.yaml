@@ -31,6 +31,7 @@ leaderElection:
   resourceName: lock-object-my-scheduler
 ```
 
+
 pod-with-custom-scheduler.yaml
 ```
 apiVersion: v1
