@@ -331,3 +331,111 @@ ls /opt/app-secret-volumes
 
 cat /opt/app-secret-volumes/DB_Password
 ```
+
+```
+etcdctl
+
+sudo apt-get install -etcd-client
+```
+
+```
+sudo ETCDCTL_API=3 etcdctl \
+   --cacert=/etc/kubernetes/pki/etcd/ca.crt   \
+   --cert=/etc/kubernetes/pki/etcd/server.crt \
+   --key=/etc/kubernetes/pki/etcd/server.key  \
+   get /registry/secrets/default/(nama-secret)
+```
+
+##### OR
+
+```
+sudo ETCDCTL_API=3 etcdctl \
+   --cacert=/etc/kubernetes/pki/etcd/ca.crt   \
+   --cert=/etc/kubernetes/pki/etcd/server.crt \
+   --key=/etc/kubernetes/pki/etcd/server.key  \
+   get /registry/secrets/default/(nama-secret) | hexdump -C
+```
+
+##### Configuration and determining whether encryption at rest is already enabled
+```
+ps -aux | grep kube-api | grep "encryption-provider-config"
+```
+
+##### Encrypt Your Data
+enc.yaml
+```
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+      - configmaps
+      - pandas.awesome.bears.example
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              secret: aWxoYXNrYW0=
+      - identity: {}
+```
+
+
+```
+sudo mv enc.yaml /etc/kubernetes/enc/enc.yaml
+```
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 10.10.30.4:6443
+  creationTimestamp: null
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    ...
+    - --encryption-provider-config=/etc/kubernetes/enc/enc.yaml  # <-- add this line
+    volumeMounts:
+    ...
+    - name: enc                           # <-- add this line
+      mountPath: /etc/kubernetes/enc      # <-- add this line
+      readonly: true                      # <-- add this line
+    ...
+  volumes:
+  ...
+  - name: enc                             # <-- add this line
+    hostPath:                             # <-- add this line
+      path: /etc/kubernetes/enc           # <-- add this line
+      type: DirectoryOrCreate             # <-- add this line
+```
+
+##### if connection error host port when kubectl get secret, run: 
+```
+crictl pods
+```
+
+```
+kubectl create secret generic db-secret-2 --from-literal=key=ilhaskam --from-literal=key2=ilhaskam2
+```
+
+```
+sudo ETCDCTL_API=3 etcdctl \
+   --cacert=/etc/kubernetes/pki/etcd/ca.crt   \
+   --cert=/etc/kubernetes/pki/etcd/server.crt \
+   --key=/etc/kubernetes/pki/etcd/server.key  \
+   get /registry/secrets/default/db-secret-2 | hexdump -C
+```
+
+##### Ensure all Secrets are encrypted
+```
+kubectl get secrets --all-namespaces -o json | kubectl replace -f -
+```
+
+##### [See this link](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/)
