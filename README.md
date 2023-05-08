@@ -1,7 +1,14 @@
 # kubernetes-cka
 
+### Cek Release
+```
+cat /etc/*release*
+```
+
+
 ### Mengubah default namespace
 kubectl config set-context $(kubectl config current-context) --namespace=(nama-namespace)
+
 
 ### Update Version Kubernetes
 
