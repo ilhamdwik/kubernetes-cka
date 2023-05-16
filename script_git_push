@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 git status
-echo "git status success"
+echo "git status success/n"
 
 git pull
-echo "git pull success"
+echo "git pull success/n"
 
 git add .
-echo "git add success"
+echo "git add success/n"
 
 git commit -m "update"
-echo "git commit success"
+echo "git commit success/n"
 
 git push
-echo "git push success"
+echo "git push success/n"
