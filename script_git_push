@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+git status
+echo "git status success"
+
+git pull
+echo "git pull success"
+
+git add .
+echo "git add success"
+
+git commit -m "update"
+echo "git commit success"
+
+git push
+echo "git push success"
