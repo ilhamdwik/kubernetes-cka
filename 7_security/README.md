@@ -292,9 +292,14 @@ kubectl auth can-i delete nodes
 
 Solutions RBAC
 ```
-kubectl create role developer --verb=list,create,delete --resource=pods
+kubectl create role developer --verb=list,create,delete --resource=pods,deployments --namespace (name-namespace)
 
-kubectl create rolebinding dev-user-binding --role=developer --user=dev-user
+kubectl create rolebinding dev-user-binding --role=developer --user=dev-user --namespace (name-namespace)
 
 kubectl --as dev-user get pod (pod-name) -n (name-namespace)
+
+kubectl --as dev-user create deployment nginx --image=nginx --namespace (name-namespace) 
 ```
+
+
+### ClusterRoles & Role Bindings
