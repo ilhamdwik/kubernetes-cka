@@ -331,3 +331,21 @@ kubectl create clusterrole storage-admin --verb=get,list,watch,create,delete --r
 
 kubectl create clusterrolebinding michelle-storage-admin --user=michelle --clusterrole=storage-admin
 ```
+
+
+### Service Account 
+```
+kubectl create serviceaccount (nama-serviceaccount)
+
+kubectl create serviceaccount dashboard-sa
+
+kubectl describe serviceaccount dashboard-sa
+
+kubectl describe secret dashboard-sa-token-...
+
+kubectl exec -it dashboard-sa --ls /var/run/secrets/kubernetes.io/serviceaccount
+
+kubectl exec -it dashboard-sa ls /var/run/secrets/kubernetes.io/serviceaccount
+
+kubectl exec -it dashboard-sa cat /var/run/secrets/kubernetes.io/serviceaccount/token
+```
