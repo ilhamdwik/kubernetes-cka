@@ -272,6 +272,7 @@ Persistent Key/Value Store
 We have already seen how to secure the ETCD key/value store using TLS certificates in the previous videos. Towards the end of this course, when we setup an actual cluster from scratch we will see this in action.
 
 
+
 ### Role Based Access Controls (RBAC)
 ```
 kubectl get roles
@@ -283,14 +284,16 @@ kubectl describe role (role-name)
 kubectl describe rolebinding (name-rolebinding)
 ```
 
-Check Access in kluster kubernetes
+
+##### Check Access in kluster kubernetes
 ```
 kubectl auth can-i create deployments
 
 kubectl auth can-i delete nodes
 ```
 
-Solutions RBAC
+
+##### Solutions RBAC
 ```
 kubectl create role developer --verb=list,create,delete --resource=pods,deployments --namespace (name-namespace)
 
@@ -309,4 +312,22 @@ melihat daftar lengkap sumber daya namespace dan non-namespace
 kubectl api-resources --namespace=true
 
 kubectl api-resources --namespace=false
+```
+
+
+##### create clusterroles & clusterrolebindings
+```
+kubectl create clusterrole michelle-role --verb=get,list,watch --resource=nodes
+
+kubectl create clusterrolebinding michelle-role-binding --clusterrole=michelle-role --user=michelle
+
+kubectl delete clusterrole michelle-role
+
+kubectl delete clusterrolebinding michelle-role-binding
+```
+
+```
+kubectl create clusterrole storage-admin --verb=get,list,watch,create,delete --resource=persistentvolumes,storageclasses
+
+kubectl create clusterrolebinding michelle-storage-admin --user=michelle --clusterrole=storage-admin
 ```

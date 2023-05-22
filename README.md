@@ -3,7 +3,7 @@
 
 ### if error The connection to the server 10.10.3.250:6443 was refused - did you specify the right host or port? on kubernetes
 
-run script below
+##### run script below
 ```
 sudo systemctl restart kubelet
 
@@ -12,11 +12,12 @@ sudo systemctl restart containerd
 sudo systemctl restart docker
 ```
 
+##### check config on kubernetes
 ```
 cat .kube/config
 ```
 
-if .kube/config null
+##### if .kube/config null, run script bellow
 ```
 mkdir -p $HOME/.kube
 
@@ -58,10 +59,30 @@ kubeadm upgrade apply v1.27.0
 sudo systemctl restart kubelet
 ```
 
+### Count Words ClusterRoles
+```
+-w : count words
+-c : count bytes
+-m : count characters
+-l : count newlines
+-L : print longest line length
+
+kubectl get clusterroles --no-headers | wc -w
+```
+
 ### Get ipaddresspolls in metallb
 ```
 kubectl get ipaddresspool.metallb.io -n metallb-system
 ```
+
+
+### api-resources
+```
+kubectl api-resources
+```
+
+
+---------------------------------------------------------------------------------------------------------
 
 
 # Materi CKA
