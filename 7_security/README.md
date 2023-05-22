@@ -146,7 +146,7 @@ kubectl config view --kubeconfig=my-custom-config
 ```
 
 
-###~/my-kube-config
+##### ~/my-kube-config
 ```
 apiVersion: v1
 kind: Config
@@ -272,7 +272,7 @@ Persistent Key/Value Store
 We have already seen how to secure the ETCD key/value store using TLS certificates in the previous videos. Towards the end of this course, when we setup an actual cluster from scratch we will see this in action.
 
 
-### Role Based Access COntrols (RBAC)
+### Role Based Access Controls (RBAC)
 ```
 kubectl get roles
 
@@ -303,3 +303,10 @@ kubectl --as dev-user create deployment nginx --image=nginx --namespace (name-na
 
 
 ### ClusterRoles & Role Bindings
+
+melihat daftar lengkap sumber daya namespace dan non-namespace
+```
+kubectl api-resources --namespace=true
+
+kubectl api-resources --namespace=false
+```

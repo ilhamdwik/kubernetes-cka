@@ -58,6 +58,10 @@ kubeadm upgrade apply v1.27.0
 sudo systemctl restart kubelet
 ```
 
+### Get ipaddresspolls in metallb
+```
+kubectl get ipaddresspool.metallb.io -n metallb-system
+```
 
 
 # Materi CKA
