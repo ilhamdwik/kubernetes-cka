@@ -1,5 +1,7 @@
 # kubernetes-cka
 
+### cka study guide
+[url : https://github.com/bmuschko/cka-study-guide](https://github.com/bmuschko/cka-study-guide)
 
 ### if error The connection to the server 10.10.3.250:6443 was refused - did you specify the right host or port? on kubernetes
 

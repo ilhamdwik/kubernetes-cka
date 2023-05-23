@@ -349,3 +349,17 @@ kubectl exec -it dashboard-sa ls /var/run/secrets/kubernetes.io/serviceaccount
 
 kubectl exec -it dashboard-sa cat /var/run/secrets/kubernetes.io/serviceaccount/token
 ```
+
+
+### Image Security
+
+##### Create Secret Docker Registry
+```
+kubectl create secret docker-registry (name) --docker-server=(server) --docker-username=(username) --docker-password=(password) --docker-email=(email)
+
+kubectl create secret docker-registry private-reg-cred --docker-server=myprivateregistry.com:5000 --docker-username=dock_user --docker-password=dock_password --docker-email=dock_user@myprivateregistry.com
+```
+
+
+### Docker Security
+
