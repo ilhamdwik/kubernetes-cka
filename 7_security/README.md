@@ -361,5 +361,4 @@ kubectl create secret docker-registry private-reg-cred --docker-server=myprivate
 ```
 
 
-### Docker Security
 
