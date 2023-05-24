@@ -86,6 +86,93 @@ kubectl api-resources
 ```
 
 
+--------------------------------------------------------------------------------------------------------
+
+
+### Kubectx dan Kubens – Utilitas baris perintah
+Sepanjang kursus, Anda harus mengerjakan beberapa ruang nama berbeda di lingkungan lab praktik. Di beberapa lab, Anda juga harus beralih di antara beberapa konteks.
+
+
+
+Meskipun ini sangat bagus untuk praktik langsung, dalam kluster kubernetes “langsung” nyata yang diimplementasikan untuk produksi, mungkin ada kemungkinan untuk sering beralih antara sejumlah besar ruang nama dan kluster.
+
+
+
+Ini dapat dengan cepat menjadi tugas yang membingungkan dan membebani jika Anda harus mengandalkan kubectl saja.
+
+
+
+Di sinilah alat baris perintah seperti kubectx dan kubens masuk ke dalam gambar.
+
+
+
+Referensi: https://github.com/ahmetb/kubectx
+
+
+
+Kubectx:
+
+Dengan alat ini, kamu tidak perlu menggunakan perintah "kubectl config" yang panjang untuk beralih antar konteks. Alat ini sangat berguna untuk mengalihkan konteks antar cluster dalam lingkungan multi-cluster.
+
+
+
+Instalasi:
+```
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+```
+
+Sintaksis:
+
+Untuk membuat daftar semua konteks:
+```
+kubectx
+```
+
+
+Untuk beralih ke konteks baru:
+```
+kubectx <context_name>
+```
+
+
+Untuk beralih kembali ke konteks sebelumnya:
+```
+kubectx -
+```
+
+
+Untuk melihat konteks saat ini:
+```
+kubectx -c
+```
+
+
+
+
+Kubens:
+
+Alat ini memungkinkan pengguna untuk beralih antar ruang nama dengan cepat menggunakan perintah sederhana.
+
+Instalasi:
+```
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+```
+
+Sintaksis:
+
+Untuk beralih ke namespace baru:
+```
+kubens <new_namespace>
+```
+
+
+Untuk beralih kembali ke namespace sebelumnya:
+```
+kubens -
+```
+
 ---------------------------------------------------------------------------------------------------------
 
 
