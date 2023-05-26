@@ -1,5 +1,10 @@
 # kubernetes-cka
 
+### Exec Pod
+```
+kubectl exec -it (pod-name) -- /bin/bash
+```
+
 ### cka study guide
 [url : https://github.com/bmuschko/cka-study-guide](https://github.com/bmuschko/cka-study-guide)
 
