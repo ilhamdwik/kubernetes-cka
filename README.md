@@ -5,6 +5,13 @@
 kubectl exec -it (pod-name) -- /bin/bash
 ```
 
+### Change default StorageClass
+```
+kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+
+kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
 ### cka study guide
 [url : https://github.com/bmuschko/cka-study-guide](https://github.com/bmuschko/cka-study-guide)
 
