@@ -29,6 +29,19 @@ The same is true for ReplicaSets or Deployments. Add this to the pod template se
 Reference URL: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#claims-as-volumes
 
 
+##### Create StorageClass
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: example-nfs
+provisioner: external-nfs
+parameters:
+  server: 10.10.3.249
+  path: /srv/nfs/mydata
+  readOnly: "false"
+```
+
 ##### Create Persistent Volume
 
 pv.yml
@@ -36,35 +49,33 @@ pv.yml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-test
+  name: local-pv
 spec:
   capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
+    storage: 100Mi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: nfs
-  mountOptions:
-    - hard
-    - nfsvers=4.1
-  nfs:
-    path: /srv/nfs/mydata
-    server: 10.10.3.249
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: example-nfs
+  hostPath:
+    path: /data
 ```
 
 ##### Create Persistent Volume Claims
+
+pvc.yml
 ```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: test-pvc
+  name: local-pvc
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 500Mi
+      storage: 50Mi
+  storageClassName: example-nfs
 ```
 
 ##### Create Test pvc for Pod
@@ -72,42 +83,21 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: task-pv-pod
+  name: pvc-for-pod
 spec:
   volumes:
-    - name: task-pv-storage
+    - name: pvc-storage
       persistentVolumeClaim:
-        claimName: test-pvc
+        claimName: local-pvc
   containers:
-    - name: task-pv-container
+    - name: pod-container
       image: nginx
       ports:
         - containerPort: 80
           name: "http-server"
       volumeMounts:
         - mountPath: "/usr/share/nginx/html"
-          name: task-pv-storage
-
-OR
-
-apiVersion: v1
-kind: Pod
-metadata:
-  name: task-pv-pod2
-spec:
-  volumes:
-    - name: task-pv-storage2
-      persistentVolumeClaim:
-        claimName: test-pvc
-  containers:
-    - name: task-pv-container2
-      image: nginx:1.17
-      ports:
-        - containerPort: 80
-          name: "http-server"
-      volumeMounts:
-        - mountPath: "/usr/share/nginx/html"
-          name: task-pv-storage2
+          name: pvc-storage
 ```
 
 
