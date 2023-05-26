@@ -79,6 +79,8 @@ spec:
 ```
 
 ##### Create Test pvc for Pod
+
+test-pvc-in-pod.yml
 ```
 apiVersion: v1
 kind: Pod
