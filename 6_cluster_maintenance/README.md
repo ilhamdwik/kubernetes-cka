@@ -162,7 +162,7 @@ ETCDCTL_API=3 etcdctl snapshot restore /opt/snapshot-pre-boot-1.db --data-dir /v
 how many cluster?
 ```
 kubectl config view
-``
+```
 
 switch cluster
 ```
