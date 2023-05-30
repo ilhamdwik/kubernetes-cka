@@ -225,4 +225,93 @@ https://v1-22.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm
 
 
 
+### Solution Explore Environment
+```
+ip address
+
+ip address show type bridge
+
+ip route
+```
+
+
+### CNI in Kubernetes
+
+##### View kubelet options
+```
+ps -aux | grep kubelet
+
+ls /opt/cni/bin
+
+ls /etc/cni/net.d
+
+sudo su & cat /etc/cni/net.d/10-calico
+```
+
+
+### Note CNI Weave
+Important Update: -
+
+Before going to the CNI weave lecture, we have an update for the Weave Net installation link. They have announced the end of service for Weave Cloud.
+
+To know more about this, read the blog from the link below: -
+
+https://www.weave.works/blog/weave-cloud-end-of-service
+
+As an impact, the old weave net installation link won’t work anymore: -
+
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
+Instead of that, use the below latest link to install the weave net: -
+
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
+Reference links: -
+
+https://www.weave.works/docs/net/latest/kubernetes/kube-addon/#-installation
+
+https://github.com/weaveworks/weave/releases
+
+
+### Solution Explore CNI
+
+Check container runtime in kubelet
+```
+ps -aux | grep -i kubelet | grep -i container-runtime
+```
+
+Path configured with all binaries of CNI supported plugins
+```
+/opt/cni/bin
+```
+
+CNI plugin configured on kubernetes-cluster
+```
+/etc/cni/net.d
+```
+
+
+### Solution Deploy Network
+```
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
+OR
+
+wget https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+```
+
+edit weave-daemonset-k8s.yaml file and change value to cluster-cidr
+```
+containers:
+  - name: weave
+    env:
+      - name: IPALLOC_RANGE
+        value: 10.0.0.0/16 <--- change value in here with number cluster-cidr
+```
+
+to get cluster-cidr
+```
+k describe cm kube-proxy -n kube-system
+```
+and search clusterCIDR
 
