@@ -315,3 +315,47 @@ k describe cm kube-proxy -n kube-system
 ```
 and search clusterCIDR
 
+
+
+### Solution Networking Weave
+
+default gateway configured on the pods scheduled on vmworker1
+```
+kubectl run busybox --image=busybox --dry-run=client -o yaml -- sleep 1000 > busybox.yaml
+```
+
+edit nodeName:vmworker1
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: busybox
+  name: busybox
+spec:
+  nodeName: vmworker1
+  containers:
+  - args:
+    - sleep
+    - "1000"
+    image: busybox
+    name: busybox
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+
+```
+kubectl create -f busybox.yaml
+```
+
+and check default gateway on pods busybox
+```
+kubectl exec busybox -- route -n
+
+OR
+
+kubectl exec busybox -- ip route
+```
