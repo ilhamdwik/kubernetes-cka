@@ -359,3 +359,41 @@ OR
 
 kubectl exec busybox -- ip route
 ```
+
+
+### Solution Service Networking
+
+what network range are the nodes in the cluster part of?
+is: 10.10.3.0/24
+
+```
+kubectl get nodes -o wide
+10.10.3.250
+
+ip address
+10.10.3.250/24
+```
+
+
+what is the range of IP addresses configured for PODs on this cluster?
+is: ipalloc-range:.....
+
+```
+kubectl logs (name-pod-weave) -n kube-system
+
+and search "ipalloc-range:....."
+```
+
+
+what is the IP range configured for the services within the cluster?
+is: - --service-cluster-ip-range=10.96.0.0/12
+
+```
+cd /etc/kubernetes/manifest/
+
+cat kube-apiserver.yaml
+
+and search "- --service-cluster-ip-range=10.96.0.0/12"
+```
+
+
