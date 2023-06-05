@@ -397,3 +397,18 @@ and search "- --service-cluster-ip-range=10.96.0.0/12"
 ```
 
 
+### Explore DNS
+Identify DNS solution in this cluster
+```
+kubectl get pods -n kube-system
+
+kubectl get pods -n kube-system
+
+/etc/coredns/Corefile
+
+kubectl exec (pod-name) -- nslookup (pod-name.name-namespace)
+
+kubectl exec hr -- nslookup mysql.payroll
+```
+
+
