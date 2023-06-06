@@ -53,7 +53,11 @@ cat /etc/*release*
 
 ### Mengubah default namespace
 ```
-kubectl config set-context $(kubectl config current-context) --namespace=(nama-namespace)
+kubectl config set-context $(kubectl config current-context) --namespace=(name-namespace)
+
+OR
+
+kubectl config set-context --current --namespace=(name-namespace)
 ```
 
 
