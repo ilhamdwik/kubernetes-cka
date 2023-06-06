@@ -98,6 +98,14 @@ kubectl api-resources
 ```
 
 
+### if delete namespace and still terminating
+```
+kubectl get namespace <YOUR_NAMESPACE> -o json > <YOUR_NAMESPACE>.json
+
+kubectl replace --raw "/api/v1/namespaces/<YOUR_NAMESPACE>/finalize" -f ./<YOUR_NAMESPACE>.json
+```
+
+
 --------------------------------------------------------------------------------------------------------
 
 
