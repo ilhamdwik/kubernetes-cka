@@ -520,13 +520,36 @@ spec:
 ### Solution Ingress Networking 1
 
 ```
+kubectl get ingress -A
+
+kubectl describe ingress (ingress-name)
+
+kubectl edit ingress (ingress-name)
+
 kubectl create ingress ingress-pay -n critical-space --rule="/pay=pay-service:8282"
+```
+
 
 and add annotation on ingress
 
 annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+
+
+
+### Solution Ingress Networking 2
+
+```
+kubectl create namespace ingress-space
+
+kubectl create configmap nginx-configuration -n ingress-space
+
+kubectl create serviceaccount ingress-serviceaccount -n ingress-space
+
+kubectl create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080" --rule="/watch=watch-service:8080"
 ```
 
-
+annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 
