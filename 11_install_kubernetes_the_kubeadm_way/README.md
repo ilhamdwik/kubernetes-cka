@@ -99,10 +99,30 @@ curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --de
 
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
+if error
+mkdir /etc/apt/keyrings
+
+and run again
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
 sudo apt-get update
+
+
+in latest version
 sudo apt-get install -y kubelet kubeadm kubectl
+
+OR you mean specific version of kubelet, kubeadm, and kubectl
+
+specific version kubelet, kubeadm, kubectl
+sudo apt-get install -y kubelet=1.26.0-00 kubeadm=1.26.0.0-00 kubectl=1.26.0.0-00
+
+
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
+
+NB: In releases older than Debian 12 and Ubuntu 22.04, /etc/apt/keyrings does not exist by default. You can create this directory if you need to, making it world-readable but writeable only by admins.
+
 
 
 3. Creating a cluster with kubeadm
