@@ -34,8 +34,11 @@ kubectl get nodes -o=jsonpath='{.items[*].metadata.name} {"\n"} {.items[*].statu
 ```
 
 NB:
+
 {"\n"} : New Line
+
 {"\t"} : Tab
+
 
 
 Loops - Range
