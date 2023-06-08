@@ -40,11 +40,23 @@ NB:
 
 Loops - Range
 ```
-FOR EACH NODE                                          | '{range}'
+FOR EACH NODE                                          | '{range.items[*]}
 
-	PRINT NODE NAME \t PRINT CPU COUNT \n          |
+	PRINT NODE NAME \t PRINT CPU COUNT \n          | 	{.metadata.name} {"\t"} {.status.capacity.cpu} {"\n"}
 
-END FOR                                                |
+END FOR                                                | {end}'
+```
+
+```
+kubectl get nodes -o=custom-columns=<COLUMN NAME>:<JSON PATH>
+
+kubectl get nodes -o=custom-columns=NODE:.metadata.name
+
+kubectl get nodes -o=custom-columns=NODE:.metadata.name,CPU:.status.capacity.cpu
+
+kubectl get nodes --sort-by=.metadata.name
+
+kubectl get nodes --sort-by=.status.capacity.cpu
 ```
 
 
