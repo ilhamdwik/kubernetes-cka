@@ -299,4 +299,64 @@ yes
 
 kubectl auth can-i watch pods --as=john
 no
+
+7. Service & Pod DNS Resolution recorded correctly
+k run nginx-resolver --image=nginx
+
+k expose pod nginx-resolver --name=nginx-resolver-service --port 80
+
+k get all
+
+k run busybox --image=busybox:1.28 -- sleep 4000
+
+k get all
+
+k exec busybox -- nslookup nginx-resolver-service
+
+mkdir CKA
+
+k exec busybox -- nslookup nginx-resolver-service > CKA/nginx.svc
+
+k get pods -o wide
+
+k exec busybox -- nslookup 192-168-79-230.development.pod.cluster.local
+NB: 192-168-79-230 is IP Pod nginx-resolver
+
+k exec busybox -- nslookup 192-168-79-230.development.pod.cluster.local > CKA/nginx.pod 
+NB: 192-168-79-230 is IP Pod nginx-resolver
+
+cat nginx.svc
+
+cat nginx.pod
+
+
+8. static pod in node1 or vmworker1
+k run nginx-critical --image=nginx --restart=Always --dry-run=client -o yaml
+copy paste value in yaml to vmworker1 on file /etc/kubernetes/manifests/nginx-critical.yaml
+
+ssh vmworker1
+
+cd /etc/kubernetes/manifests
+
+sudo nano nginx-critical.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-critical
+  name: nginx-critical
+spec:
+  containers:
+  - image: nginx
+    name: nginx-critical
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+k get pods -n default
+
+k describe pod nginx-critical-vmworker1 -n default
 ```
+
