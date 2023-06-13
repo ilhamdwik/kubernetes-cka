@@ -97,7 +97,7 @@ get osImage                  = kubectl get nodes -o=jsonpath="{.items[*].status.
 
 12.
 nano pv-analytics.yaml
-```
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -109,7 +109,7 @@ spec:
     - ReadWriteMany
   hostPath:
     path: "/pv/data-analytics"
-```
+
 
 k create -f pv-analytics.yaml 
 k get pv
