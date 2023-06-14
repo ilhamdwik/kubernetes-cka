@@ -44,7 +44,7 @@ More FAQs here
 
 # More Certification Tips!
 
-[01](certification-tips.png)
+![01](certification-tips.png)
 
 Official Tips:
 
