@@ -360,3 +360,183 @@ k get pods -n default
 k describe pod nginx-critical-vmworker1 -n default
 ```
 
+
+### Solution Mock Exam - 3
+```
+1. serviceaccount, clusterrole access list in persistentvolumes, clusterrolebinding
+k config set-context --current --namespace default
+
+kubectl create sa -h
+kubectl create serviceaccount pvviewer
+k describe sa pvviewer
+
+k create clusterrole -h
+kubectl create clusterrole pvviewer-role --verb=list --resource=persistentvolumes
+k get clusterrole
+k get clusterrole | grep
+k get clusterrole | grep pvviewer-role
+k describe clusterrole pvviewer-role
+
+k create clusterrolebinding -h
+kubectl create clusterrolebinding pvviewer-role-binding --clusterrole=pvviewer-role --serviceaccount=pvviewer
+kubectl create clusterrolebinding pvviewer-role-binding --clusterrole=pvviewer-role --serviceaccount=exams:pvviewer
+k describe clusterrolebindings pvviewer-role-binding
+
+k run pvviewer --image=redis --dry-run=client -o yaml > pvviewer.yaml
+k create -f pvviewer.yaml
+
+nano pvviewer.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pvviewer
+  name: pvviewer
+spec:
+  containers:
+  - image: redis
+    name: pvviewer
+    resources: {}
+  serviceAccountName: pvviewer <-- add this line
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+k describe pod/pvviewer
+
+2. list InternalIP of all nodes of the cluster
+kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' > CKA/node_ips
+
+3. multi-pod with two containers
+nano multi-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-pod
+spec:
+  containers:
+
+  - name: alpha
+    image: nginx
+    env:
+    - name: name
+      value: "alpha"
+
+  - name: beta
+    image: busybox
+    command: ["sleep", "4800"]
+    env:
+    - name: name
+      value: "beta"
+
+4. runAsUser, fsGroup in security context
+nano non-root-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: non-root-pod
+spec:
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 2000
+  containers:
+  - name: non-root-pod
+    image: redis:alpine
+
+k create -f non-root-pod.yaml
+
+
+5. network policy
+k run curl --image=alpine/curl --rm --it -- sh
+curl np-test-service
+
+nano ingress-to-npest.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ingress-to-nptest
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      run: np-test-1
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 80
+
+k create -f ingress-to-nptest.yaml
+
+
+6.
+k taint node -h
+k get nodes
+k get nodes --show-labels
+k taint nodes vmworker1 env_type=production:NoSchedule
+k describe nodes vmworker1
+k run dev-redis --image=redis:alpine
+k get pods -o wide
+
+and pods running on vmworker2, because you taint vmworker1
+
+k run prod-redis --image=redis:alpine --dry-run=client -o yaml > prod-redis.yaml
+vi prod-redis.yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: prod-redis
+  name: prod-redis
+spec:
+  containers:
+  - image: redis:alpine
+    name: prod-redis
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  tolerations:            <-- add this line
+  - key: "env_type"       <-- add this line
+    operator: "Equal"     <-- add this line
+    value: "production"   <-- add this line
+    effect: "NoSchedule"  <-- add this line
+status: {}
+
+k create -f prod-redis.yaml 
+k get all -o wide
+k describe pod prod-redis
+k describe pod dev-redis
+
+7. pod with labels environtment=production,tier=frontend in namespace hr
+k create ns hr
+k get ns
+k get all -n hr
+k config set-context --current --namespace hr
+k config view | grep namespace
+k run hr-pod --image=redis:alpine -n hr --labels="environtment=production,tier=frontend"
+k get all
+k describe pod hr-pod
+
+8. fix troubleshoot
+sudo cp /.kube/config kubeconfig
+cat kubeconfig 
+sudo cat kubeconfig 
+sudo nano kubeconfig 
+k get nodes --kubeconfig kubeconfig
+chown --help
+sudo chown nashta:nashta kubeconfig
+k get nodes --kubeconfig kubeconfig
+and error "invalid port"
+change port server: https://127.0.0.1:99999 to server: https://127.0.0.1:6443
+
+and try again
+k get nodes --kubeconfig kubeconfig
+
+9. kube-controller-manager
+k get pods -n kube-system
+if error the pods check on /etc/kubernetes/manifests
+and fix error on file
+```
