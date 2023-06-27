@@ -202,7 +202,7 @@ kubens -
 
          - RBAC (User can deploy etc)
          - Multi image/container on single pod
-         -  Upgrade kubernetes
+         - Upgrade kubernetes
          - PersistenVolume & PersistenVolumeClaim
          - statefulset
          - crete svc 
