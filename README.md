@@ -200,6 +200,21 @@ kubens -
 ---------------------------------------------------------------------------------------------------------
 
 
+         - RBAC (User can deploy etc)
+         - Multi image/container on single pod
+         -  Upgrade kubernetes
+         - PersistenVolume & PersistenVolumeClaim
+         - statefulset
+         - crete svc 
+         - create svc with response
+         - busybox 
+         - ingres
+         - cordon & uncordon Node
+         - node not running
+
+---------------------------------------------------------------------------------------------------------
+
+
 # Materi CKA
 
 Domains & Competencies
