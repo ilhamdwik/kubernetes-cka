@@ -110,6 +110,10 @@ kubectl replace --raw "/api/v1/namespaces/<YOUR_NAMESPACE>/finalize" -f ./<YOUR_
 ```
 
 
+### Port Kubernetes
+![01](kubernetes_port.png)
+
+
 --------------------------------------------------------------------------------------------------------
 
 
