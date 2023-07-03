@@ -276,6 +276,8 @@ echo -n 'cGFzd3Jk' | base64 --decode
 
 #### Secret in Pods
 
+link : https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/
+
 secret-data.yaml
 ```
 apiVersion: v1
@@ -313,6 +315,7 @@ envFrom:
 ```
 
 ##### SINGLE ENV
+
 ```
 env:
   - name:DB_Password
@@ -321,6 +324,7 @@ env:
         name: app-secret
         key: DB_Password
 ```
+
 
 ##### VOLUME
 ```
