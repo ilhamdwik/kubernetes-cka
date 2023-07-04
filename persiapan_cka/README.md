@@ -117,6 +117,28 @@ spec:
 status: {}
 ```
 
+initContainers
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: multi-container
+  name: multi-container
+spec:
+  containers:
+  - image: lisenet/httpd-pii-demo:0.2
+    name: blue
+    resources: {}
+  - image: lisenet/httpd-healthcheck:1.0.0
+    name: healthcheck
+  initContainers:
+  - name: busybox
+    image: busybox:1.35.0
+    command: ['sh', '-c', 'echo FIRST']
+```
+
 
 
 # Storage Classes & Persistent Volumes & Persistent Volume Claims
@@ -125,7 +147,9 @@ link : https://kubernetes.io/docs/concepts/storage/volumes/
 link : https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 link : https://kubernetes.io/docs/concepts/storage/storage-classes/
 
+
 ### Storage Class
+
 NFS
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -150,7 +174,84 @@ volumeBindingMode: WaitForFirstConsumer
 
 ### Persistent Volumes
 
- 
+Hostpath
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: example-nfs
+  hostPath:
+    path: /data/ 
+```
+
+
+Local
+link : https://kubernetes.io/docs/concepts/storage/volumes/#local
+
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/ssd1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - example-node
+```
+
+
+### Persistent Volume Claims
+
+link : https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumes-typed-hostpath
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: block-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block
+  resources:
+    requests:
+      storage: 10Gi
+```
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: example-nfs
+```
 
 
 
