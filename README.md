@@ -15,6 +15,11 @@ kubectl cluster-info dump | grep -m 1 cluster-cidr
 kubectl cluster-info dump | grep -m 1 service-cluster-ip-range
 ```
 
+### Check Pod Subnet & Service Subnet
+```
+kubectl describe cm kubeadm-config -n kube-system |grep Subnet
+```
+
 ### Change default StorageClass
 ```
 kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
