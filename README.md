@@ -10,6 +10,11 @@ kubectl exec -it (pod-name) -- /bin/bash
 kubectl cluster-info dump | grep -m 1 cluster-cidr
 ```
 
+### Check Services IPs Range
+```
+kubectl cluster-info dump | grep -m 1 service-cluster-ip-range
+```
+
 ### Change default StorageClass
 ```
 kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
