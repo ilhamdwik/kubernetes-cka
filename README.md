@@ -5,6 +5,11 @@
 kubectl exec -it (pod-name) -- /bin/bash
 ```
 
+### Check Pod Network CIDR
+```
+kubectl cluster-info dump | grep -m 1 cluster-cidr
+```
+
 ### Change default StorageClass
 ```
 kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
