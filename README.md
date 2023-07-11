@@ -27,6 +27,18 @@ kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{
 kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
+### Delete namespace terminating
+k get ns svc-prom -o json > tmp.json
+vi tmp.json 
+nano tmp.json
+
+change "finalize=null"
+
+k replace --raw "/api/v1/namespaces/svc-prom/finalize" -f tmp.json 
+nano tmp.json 
+k replace --raw "/api/v1/namespaces/svc-prom/finalize" -f tmp.json 
+
+
 ### cka study guide
 [url : https://github.com/bmuschko/cka-study-guide](https://github.com/bmuschko/cka-study-guide)
 
@@ -224,10 +236,10 @@ kubens -
          - Upgrade kubernetes
          - PersistenVolume & PersistenVolumeClaim
          - statefulset
-         - crete svc 
+         - create svc 
          - create svc with response
          - busybox 
-         - ingres
+         - ingress
          - cordon & uncordon Node
          - node not running
 
