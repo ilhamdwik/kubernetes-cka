@@ -418,3 +418,58 @@ kubectl get all
 
 wait until response
 ```
+
+
+
+
+
+
+
+
+
+
+Default File kube-apiserver.yaml
+
+static pod kubernetes
+/etc/kubernetes/manifests/
+
+Certificate File Kubernetes
+client-ca-file=/etc/kubernetes/pki/ca.crt
+
+Etcd File
+etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+etcd-servers=https://127.0.0.1:2379
+
+----------------------------------------------------------------
+
+Default File etcd.yaml
+
+/var/lib/etcd
+/etc/kubernetes/pki/etcd
+
+----------------------------------------------------------------
+
+Default File kube-controller-manager.yaml
+
+authentication-kubeconfig=/etc/kubernetes/controller-manager.conf
+authorization-kubeconfig=/etc/kubernetes/controller-manager.conf
+cluster-cidr=192.168.0.0/16
+service-cluster-ip-range=10.96.0.0/12
+
+----------------------------------------------------------------
+
+Default File kube-scheduler.yaml
+
+authentication-kubeconfig=/etc/kubernetes/scheduler.conf
+authorization-kubeconfig=/etc/kubernetes/scheduler.conf
+bind-address=127.0.0.1
+
+----------------------------------------------------------------
+
+Kubelet
+
+/etc/systemd/system/kubelet.service.d
+/etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+/usr/bin/kubelet
