@@ -394,7 +394,7 @@ restore
 ETCDCTL_API=3 etcdctl --endpoints=127.0.0.1:2379 \
 > --cacert=/etc/kubernetes/pki/etcd/ca.crt \
 > --cert=/etc/kubernetes/pki/etcd/server.crt \
-> --key=/etc/kubernetes/pki/etcd/server.key \ snapshot restore --data-dir /var/lib/etcd/ilham /opt/ilham.db
+> --key=/etc/kubernetes/pki/etcd/server.key \ --data-dir /var/lib/etcd_backup snapshot restore /opt/ilham.db
 ```
 
 ```
@@ -402,32 +402,13 @@ sudo nano /etc/kubernetes/manifests/etcd.yaml
 
 and change 
 
-spec:
-  containers:
-  - command:
-    - etcd
-    - --advertise-client-urls=https://10.10.3.250:2379
-    - --cert-file=/etc/kubernetes/pki/etcd/server.crt
-    - --client-cert-auth=true
-    - --data-dir=/var/lib/etcd/ilham    <--------------- change this line
-
-and
-
-volumeMounts:
-    - mountPath: /var/lib/etcd/ilham    <--------------- change this line
-      name: etcd-data
-    - mountPath: /etc/kubernetes/pki/etcd
-      name: etcd-certs
-
-and
-
 volumes:
   - hostPath:
       path: /etc/kubernetes/pki/etcd
       type: DirectoryOrCreate
     name: etcd-certs
   - hostPath:
-      path: /var/lib/etcd/ilham         <--------------- change this line
+      path: /var/lib/etcd_backup         <--------------- change this line
       type: DirectoryOrCreate
     name: etcd-data
 
