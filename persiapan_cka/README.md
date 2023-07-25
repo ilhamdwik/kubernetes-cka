@@ -473,3 +473,29 @@ Kubelet
 /etc/systemd/system/kubelet.service.d
 /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 /usr/bin/kubelet
+
+
+# Check Validity kube-apiserver
+
+```
+openssl x509 --noout --text -in /etc/kubernetes/pki/apiserver.crt
+```
+
+```
+sudo kubeadm certs check-expiration
+```
+
+```
+kubeadm certs renew all
+```
+
+```
+root@primary1-node:~# kubectl delete pod -n kube-system -l component=kube-apiserver
+root@primary1-node:~# kubectl delete pod -n kube-system -l component=kube-scheduler
+root@primary1-node:~# kubectl delete pod -n kube-system -l component=kube-controller-manager
+root@primary1-node:~# kubectl delete pod -n kube-system -l component=etcd
+```
+
+```
+kubeadm certs renew sapiserver
+```
