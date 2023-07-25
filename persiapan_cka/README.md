@@ -499,3 +499,15 @@ root@primary1-node:~# kubectl delete pod -n kube-system -l component=etcd
 ```
 kubeadm certs renew sapiserver
 ```
+
+# Find Issuer and Extended Key Usage
+
+Kubelet Client Certificate
+```
+sudo openssl x509 --noout --text -in /var/lib/kubelet/pki/kubelet-client-current.pem
+```
+
+Kubelet Server Certificate
+```
+sudo openssl x509 --noout --text -in /var/lib/kubelet/pki/kubelet.crt
+```
