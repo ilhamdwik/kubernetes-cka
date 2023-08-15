@@ -27,6 +27,9 @@ kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{
 kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
+### Delete pod with status Evicted
+kubectl get pod -n (namespace) | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n (namespace)
+
 ### Delete namespace terminating
 k get ns svc-prom -o json > tmp.json
 vi tmp.json 
