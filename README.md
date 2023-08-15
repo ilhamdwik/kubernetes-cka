@@ -28,9 +28,12 @@ kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{
 ```
 
 ### Delete pod with status Evicted
+```
 kubectl get pod -n (namespace) | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n (namespace)
+```
 
 ### Delete namespace terminating
+```
 k get ns svc-prom -o json > tmp.json
 vi tmp.json 
 nano tmp.json
@@ -40,7 +43,7 @@ change "finalize=null"
 k replace --raw "/api/v1/namespaces/svc-prom/finalize" -f tmp.json 
 nano tmp.json 
 k replace --raw "/api/v1/namespaces/svc-prom/finalize" -f tmp.json 
-
+```
 
 ### cka study guide
 [url : https://github.com/bmuschko/cka-study-guide](https://github.com/bmuschko/cka-study-guide)
