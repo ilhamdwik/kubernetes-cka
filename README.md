@@ -32,6 +32,11 @@ kubectl patch storageclass (storageclass-name) -p '{"metadata": {"annotations":{
 kubectl get pod -n (namespace) | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n (namespace)
 ```
 
+### Delete ReplicaSet with status 0
+```
+kubectl delete replicaset $(kubectl get replicaset -o jsonpath='{ .items[?(@.spec.replicas==0)].metadata.name }' -n (namespace)) -n (namespace)
+```
+
 ### Delete namespace terminating
 ```
 k get ns svc-prom -o json > tmp.json
