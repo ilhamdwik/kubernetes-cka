@@ -144,6 +144,10 @@ kubectl api-resources
 ```
 kubectl get namespace <YOUR_NAMESPACE> -o json > <YOUR_NAMESPACE>.json
 
+kubectl get namespace $NAMESPACE -o json   | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/"   | kubectl replace --raw /api/v1/namespaces/$NAMESPACE/finalize -f -
+
+or
+
 kubectl replace --raw "/api/v1/namespaces/<YOUR_NAMESPACE>/finalize" -f ./<YOUR_NAMESPACE>.json
 ```
 
